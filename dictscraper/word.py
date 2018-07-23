@@ -1,4 +1,5 @@
 class Word:
+
     def __init__(self, *args):
         self.fields = []
 
