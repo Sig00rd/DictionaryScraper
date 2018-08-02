@@ -19,3 +19,7 @@ class Scraper:
         html = self.get_html_from_mjp()
         self.soup.build_from_html(html)
 
+    def print_pretty_page_content(self):
+        self.soup.prettify()
+        print(self.soup.content)
+
