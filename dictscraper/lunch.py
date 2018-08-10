@@ -7,4 +7,5 @@ address = "https://www.japonski-pomocnik.pl/wordDictionarySearch?word="" \
 scraper.set_address(address)
 scraper.get_html_from_mjp()
 scraper.do_magic()
-scraper.print_pretty_page_content()
+# scraper.print_pretty_page_content()
+scraper.print_table_rows()
