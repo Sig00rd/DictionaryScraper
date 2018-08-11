@@ -33,13 +33,16 @@ class Scraper:
     def build_words_from_page(self):
         # rows = self.mjp_soup.get_result_table_rows()
         # self.build_word_from_row(rows[0])
-        for row in self.mjp_soup.get_result_table_rows():
+        rows = self.mjp_soup.get_result_table_rows()
+        for row in rows:
             self.build_word_from_row(row)
 
     def build_word_from_row(self, row):
         cells = row.find_all("td")
         word = Word()
-        for cell in cells:
+        for index, cell in enumerate(cells):
+            if index == 2:
+                continue
             content = cell.find(text=True)
             word.append_field(content)
         print(word.csv())
