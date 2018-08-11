@@ -1,6 +1,7 @@
 import requests
 
 from src.dictscraper import jmp_page
+from src.dictscraper.word import Word
 
 
 class Scraper:
@@ -23,8 +24,22 @@ class Scraper:
         self.mjp_soup.prettify()
         print(self.mjp_soup.soup)
 
-    def print_table_rows(self):
+    # def print_table_rows(self):
+    #     for row in self.mjp_soup.get_result_table_rows():
+    #         cells = row.find_all("td")
+    #         for cell in cells:
+    #             print(cell.find(text=True))
+
+    def build_words_from_page(self):
+        # rows = self.mjp_soup.get_result_table_rows()
+        # self.build_word_from_row(rows[0])
         for row in self.mjp_soup.get_result_table_rows():
-            col = row.find_all("td")
-            for stuff in col:
-                print(stuff.find(text=True))
+            self.build_word_from_row(row)
+
+    def build_word_from_row(self, row):
+        cells = row.find_all("td")
+        word = Word()
+        for cell in cells:
+            content = cell.find(text=True)
+            word.append_field(content)
+        print(word.csv())
