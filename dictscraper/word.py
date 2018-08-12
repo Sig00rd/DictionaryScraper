@@ -11,7 +11,7 @@ class Word:
     def csv(self):
         if self.is_kanji_field_empty():
             self.replace_kana_with_kanji()
-        output = str.join("; ", self.fields)
+        output = str.join(";", self.fields)
         return output
 
     def is_kanji_field_empty(self):

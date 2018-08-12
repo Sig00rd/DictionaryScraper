@@ -25,15 +25,7 @@ class Scraper:
         self.mjp_soup.prettify()
         print(self.mjp_soup.soup)
 
-    # def print_table_rows(self):
-    #     for row in self.mjp_soup.get_result_table_rows():
-    #         cells = row.find_all("td")
-    #         for cell in cells:
-    #             print(cell.find(text=True))
-
     def build_words_from_page(self):
-        # rows = self.mjp_soup.get_result_table_rows()
-        # self.build_word_from_row(rows[0])
         rows = self.mjp_soup.get_result_table_rows()
         for row in rows:
             self.build_word_from_row(row)
@@ -49,6 +41,8 @@ class Scraper:
                 content = "".join(romaji)
             elif index == 3:
                 meanings = cell.find_all(text=True)
+                if config.MEANING_LIMIT:
+                    meanings = meanings[:config.MEANING_LIMIT]
                 content = ", ".join(meanings)
             else:
                 content = cell.find(text=True)
