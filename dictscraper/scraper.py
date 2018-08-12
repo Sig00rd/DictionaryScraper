@@ -1,6 +1,7 @@
 import requests
 
 from src.dictscraper import jmp_page
+from src.dictscraper import config
 from src.dictscraper.word import Word
 
 
@@ -41,14 +42,14 @@ class Scraper:
         cells = row.find_all("td")
         word = Word()
         for index, cell in enumerate(cells):
-            # skip romaji
-            if index == 2:
+            if index == 2 and not config.INCLUDE_ROMAJI:
                 continue
-            if index == 3:
+            elif index == 2:
+                romaji = cell.find_all(text=True)
+                content = "".join(romaji)
+            elif index == 3:
                 meanings = cell.find_all(text=True)
                 content = ", ".join(meanings)
-                # print(content)
-                # print(cell)
             else:
                 content = cell.find(text=True)
             word.append_field(content)

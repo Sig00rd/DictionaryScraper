@@ -1,14 +1,12 @@
 class Word:
+    # csv layout: kanji - kana - meaning - additional info
     def __init__(self, *args):
         self.fields = []
         for arg in args:
             self.fields.append(arg)
 
     def append_field(self, content):
-        # print(content)
-        # print(content.replace("\n", ""))
         self.fields.append(content.replace("\n", ""))
-        # self.fields.append(content)
 
     def csv(self):
         if self.is_kanji_field_empty():
