@@ -41,11 +41,15 @@ class Scraper:
         cells = row.find_all("td")
         word = Word()
         for index, cell in enumerate(cells):
+            # skip romaji
             if index == 2:
                 continue
             if index == 3:
-                pass
+                meanings = cell.find_all(text=True)
+                content = ", ".join(meanings)
+                # print(content)
                 # print(cell)
-            content = cell.find(text=True)
+            else:
+                content = cell.find(text=True)
             word.append_field(content)
         print(word.csv())
