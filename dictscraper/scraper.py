@@ -43,6 +43,9 @@ class Scraper:
         for index, cell in enumerate(cells):
             if index == 2:
                 continue
+            if index == 3:
+                pass
+                # print(cell)
             content = cell.find(text=True)
             word.append_field(content)
         print(word.csv())

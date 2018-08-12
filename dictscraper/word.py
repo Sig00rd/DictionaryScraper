@@ -11,18 +11,18 @@ class Word:
         # self.fields.append(content)
 
     def csv(self):
-        if self.is_kanji_field_empty:
-            self.insert_kana_as_kanji()
+        if self.is_kanji_field_empty():
+            self.replace_kana_with_kanji()
         output = str.join("; ", self.fields)
         return output
 
     def is_kanji_field_empty(self):
-        if not self.fields[0] and self.fields[1]:
+        if not self.fields[0]:
             return 1
         else:
-            return 0
+            return 2
 
-    def insert_kana_as_kanji(self):
+    def replace_kana_with_kanji(self):
             self.fields[0], self.fields[1] = self.fields[1], self.fields[0]
 
 
