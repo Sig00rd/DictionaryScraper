@@ -1,6 +1,7 @@
 import requests
 
 from src.dictscraper import jmp_page
+from src.dictscraper import io_utils
 from src.dictscraper.cell_parser import MjpRowParser
 from src.dictscraper.word import Word
 from src.dictscraper.file_handler import FileHandler
@@ -10,7 +11,7 @@ class Scraper:
     def __init__(self):
         self.address = ""
         self.mjp_soup = jmp_page.MjpPageSoup()
-        self.words = []
+        self.word_csvs = []
         self.file_handler = FileHandler()
 
     def set_address(self, _address):
@@ -32,7 +33,7 @@ class Scraper:
         rows = self.mjp_soup.get_result_table_rows()
         for row in rows:
             word = self.parse_row_to_word(row)
-            self.words.append(word)
+            self.word_csvs.append(word.csv())
 
     def parse_row_to_word(self, row):
         cells = row.find_all("td")
@@ -43,11 +44,20 @@ class Scraper:
             content = cell_parser.parse_cell_to_string()
             word.append_field(content)
             cell_parser.increment()
-
-        # print(word.csv())
         return word
 
-    def dump_all_words_to_file(self):
-        for word in self.words:
-            line = word.csv()
-            self.file_handler.append_to_file(line)
+    def save_user_selected_words(self):
+        self.present_words_to_user()
+        word_numbers = self.get_desired_word_numbers_from_user()
+        for number in word_numbers:
+            self.append_word_to_file(number)
+
+    def present_words_to_user(self):
+        io_utils.print_words(self.word_csvs)
+
+    def get_desired_word_numbers_from_user(self):
+        return io_utils.get_word_numbers_from_user_input()
+
+    def append_word_to_file(self, word_number):
+        word_to_append = self.word_csvs[word_number]
+        self.file_handler.append_to_file(word_to_append)
