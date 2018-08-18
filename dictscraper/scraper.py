@@ -44,5 +44,10 @@ class Scraper:
             word.append_field(content)
             cell_parser.increment()
 
-        print(word.csv())
+        # print(word.csv())
         return word
+
+    def dump_all_words_to_file(self):
+        for word in self.words:
+            line = word.csv()
+            self.file_handler.append_to_file(line)
