@@ -3,6 +3,7 @@ import requests
 from src.dictscraper import jmp_page
 from src.dictscraper.cell_parser import MjpRowParser
 from src.dictscraper.word import Word
+from src.dictscraper.file_handler import FileHandler
 
 
 class Scraper:
@@ -10,6 +11,7 @@ class Scraper:
         self.address = ""
         self.mjp_soup = jmp_page.MjpPageSoup()
         self.words = []
+        self.file_handler = FileHandler()
 
     def set_address(self, _address):
         self.address = _address

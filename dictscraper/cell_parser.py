@@ -36,20 +36,20 @@ class MjpRowParser:
 
     def at_romaji_column(self):
         if self.current_column == 2:
-            return 1
-        return 0
+            return True
+        return False
 
     def at_meaning_column(self):
         if self.current_column == 3:
-            return 1
-        return 0
+            return True
+        return False
 
     def is_romaji_enabled(self):
         if self.INCLUDE_ROMAJI:
-            return 1
-        return 0
+            return True
+        return False
 
     def is_meaning_limit_set(self):
         if self.MEANING_LIMIT:
-            return 1
-        return 0
+            return True
+        return False
