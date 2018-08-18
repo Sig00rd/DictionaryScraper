@@ -49,7 +49,8 @@ class Scraper:
     def save_user_selected_words(self):
         self.present_words_to_user()
         word_numbers = self.get_desired_word_numbers_from_user()
-        for number in word_numbers:
+        valid_numbers = self.cut_numbers_bigger_than_words_list_size(word_numbers)
+        for number in valid_numbers:
             self.append_word_to_file(number)
 
     def present_words_to_user(self):
@@ -57,6 +58,12 @@ class Scraper:
 
     def get_desired_word_numbers_from_user(self):
         return io_utils.get_word_numbers_from_user_input()
+
+    def cut_numbers_bigger_than_words_list_size(self, numbers):
+        for number in numbers:
+            if number >= len(self.word_csvs):
+                numbers.remove(number)
+        return numbers
 
     def append_word_to_file(self, word_number):
         word_to_append = self.word_csvs[word_number]
