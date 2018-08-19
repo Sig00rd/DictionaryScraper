@@ -21,7 +21,7 @@ class Scraper:
         result = requests.get(self.address)
         return result.content
 
-    def do_magic(self):
+    def build_soup_from_html(self):
         html = self.get_html_from_mjp()
         self.mjp_soup.build_from_html(html)
 
@@ -29,7 +29,10 @@ class Scraper:
         self.mjp_soup.prettify()
         print(self.mjp_soup.soup)
 
-    def build_words_from_page(self):
+    def clear_csvs(self):
+        self.word_csvs = []
+
+    def build_word_csvs_from_page(self):
         rows = self.mjp_soup.get_result_table_rows()
         for row in rows:
             word = self.parse_row_to_word(row)
@@ -48,7 +51,7 @@ class Scraper:
 
     def save_user_selected_words(self):
         self.present_words_to_user()
-        word_numbers = self.get_desired_word_numbers_from_user()
+        word_numbers = self.get_desired_words_numbers_from_user()
         valid_numbers = self.cut_numbers_bigger_than_words_list_size(word_numbers)
         for number in valid_numbers:
             self.append_word_to_file(number)
@@ -56,7 +59,7 @@ class Scraper:
     def present_words_to_user(self):
         io_utils.print_words(self.word_csvs)
 
-    def get_desired_word_numbers_from_user(self):
+    def get_desired_words_numbers_from_user(self):
         return io_utils.get_word_numbers_from_user_input()
 
     def cut_numbers_bigger_than_words_list_size(self, numbers):

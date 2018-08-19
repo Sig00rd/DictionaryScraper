@@ -1,5 +1,5 @@
 class Word:
-    # csv layout: kanji - kana - meaning - additional info
+    # csv layout: kanji - kana - romaji (optional) - meaning - additional info
     def __init__(self, *args):
         self.fields = []
         for arg in args:
@@ -16,9 +16,9 @@ class Word:
 
     def is_kanji_field_empty(self):
         if not self.fields[0]:
-            return 1
+            return True
         else:
-            return 2
+            return False
 
     def replace_kana_with_kanji(self):
             self.fields[0], self.fields[1] = self.fields[1], self.fields[0]
