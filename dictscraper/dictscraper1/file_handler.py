@@ -1,5 +1,5 @@
 import os.path
-from src.dictscraper import config
+import config
 
 
 class FileHandler:

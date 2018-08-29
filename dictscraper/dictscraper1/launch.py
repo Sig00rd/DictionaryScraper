@@ -1,6 +1,6 @@
-from src.dictscraper import scraper
-from src.dictscraper import io_utils
-from src.dictscraper import address_constants
+import scraper
+import io_utils
+import address_constants
 
 scraper = scraper.Scraper()
 requested_words = io_utils.get_requested_words_from_user_input()

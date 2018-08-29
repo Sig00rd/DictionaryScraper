@@ -1,4 +1,4 @@
-from src.dictscraper import config
+import config
 
 class MjpRowParser:
     def __init__(self):

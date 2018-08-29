@@ -1,10 +1,10 @@
 import requests
 
-from src.dictscraper import jmp_page
-from src.dictscraper import io_utils
-from src.dictscraper.cell_parser import MjpRowParser
-from src.dictscraper.word import Word
-from src.dictscraper.file_handler import FileHandler
+import jmp_page
+import io_utils
+from cell_parser import MjpRowParser
+from word import Word
+from file_handler import FileHandler
 
 
 class Scraper:
