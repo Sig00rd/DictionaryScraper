@@ -5,8 +5,10 @@ class MjpRowParser:
     def __init__(self):
         self.current_column = 0
         self.cells = []
+        self.meanings = []
         self.INCLUDE_ROMAJI = config.INCLUDE_ROMAJI
         self.MEANING_LIMIT = config.MEANING_LIMIT
+        self.LAZY_MEANINGS = config.LAZY_MEANINGS
 
     def build_from_cell_list(self, cell_list):
         self.cells = cell_list
@@ -25,15 +27,28 @@ class MjpRowParser:
                 content = ""
 
         elif self.at_meaning_column():
-            meanings = cell.find_all(text=True)
-            if self.is_meaning_limit_set():
-                meanings = meanings[:self.MEANING_LIMIT]
-            content = ", ".join(meanings)
+            content = self.handle_meaning_column(cell)
 
         else:
             content = cell.find(text=True)
 
         return content
+
+    def handle_meaning_column(self, cell):
+        self.meanings = cell.find_all(text=True)
+        if self.is_meaning_limit_set():
+            self.cut_meanings_above_limit()
+        else:
+            self.let_user_choose_meanings()
+
+        content = ", ".join(self.meanings)
+        return content
+
+    def let_user_choose_meanings(self):
+        pass
+
+    def cut_meanings_above_limit(self):
+        self.meanings = self.meanings[:self.MEANING_LIMIT]
 
     def at_romaji_column(self):
         if self.current_column == 2:
@@ -51,6 +66,6 @@ class MjpRowParser:
         return False
 
     def is_meaning_limit_set(self):
-        if self.MEANING_LIMIT:
+        if self.MEANING_LIMIT and self.LAZY_MEANINGS:
             return True
         return False

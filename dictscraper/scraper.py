@@ -42,7 +42,7 @@ class Scraper:
             self.append_word_to_file(number)
 
     def present_words_to_user(self):
-        io_utils.print_words(self.word_csvs)
+        io_utils.print_words_or_meanings(self.word_csvs)
 
     def get_desired_words_numbers_from_user(self):
         return io_utils.get_word_numbers_from_user_input()

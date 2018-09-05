@@ -8,7 +8,7 @@ def to_words_list(comma_separated_words):
     return result_list
 
 
-def print_words(words):
+def print_words_or_meanings(words):
     for i in range(len(words)):
         print("{:2}: {}".format(i, words[i]))
 

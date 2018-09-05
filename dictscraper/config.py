@@ -2,7 +2,10 @@
 # set to True if you want romaji in your , False otherwise
 INCLUDE_ROMAJI = True
 
-# a limit to number of meanings that should be saved in your flashcards
+# if set to true, user won't be prompted for meanings choices with each and every words
+LAZY_MEANINGS = False
+
+# a limit to number of meanings that should be saved in your flashcards (provided LAZY_MEANINGS is set to True)
 # set to a positive integer to limit a number of meanings that will be saved, or 0 for no limit
 MEANING_LIMIT = 2
 
