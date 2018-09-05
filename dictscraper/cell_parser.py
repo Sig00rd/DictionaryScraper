@@ -1,5 +1,6 @@
 import config
 
+
 class MjpRowParser:
     def __init__(self):
         self.current_column = 0

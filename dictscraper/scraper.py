@@ -13,6 +13,7 @@ class Scraper:
         self.mjp_soup = jmp_page.MjpPageSoup()
         self.word_csvs = []
         self.file_handler = FileHandler()
+        self.cell_parser = MjpRowParser()
 
     def set_address(self, _address):
         self.address = _address
@@ -40,13 +41,12 @@ class Scraper:
 
     def parse_row_to_word(self, row):
         cells = row.find_all("td")
-        cell_parser = MjpRowParser()
-        cell_parser.build_from_cell_list(cells)
+        self.cell_parser.build_from_cell_list(cells)
         word = Word()
         for i in range(5):
-            content = cell_parser.parse_cell_to_string()
+            content = self.cell_parser.parse_cell_to_string()
             word.append_field(content)
-            cell_parser.increment()
+            self.cell_parser.increment()
         return word
 
     def save_user_selected_words(self):

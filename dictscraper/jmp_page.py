@@ -6,10 +6,7 @@ class MjpPageSoup:
         self.soup = bs4.BeautifulSoup("", "html.parser")
 
     def build_from_html(self, scrapped_html):
-        self.build_soup_from_html(scrapped_html)
-
-    def build_soup_from_html(self, scrapped_html):
-        self.soup = bs4.BeautifulSoup(scrapped_html, 'html.parser')
+        self.soup = bs4.Beautifulsoup(scrapped_html, "html.parser")
 
     def find_result_table_in_soup(self):
         result_table = self.soup.find(

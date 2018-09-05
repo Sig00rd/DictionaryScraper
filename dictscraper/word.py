@@ -1,5 +1,5 @@
 class Word:
-    # csv layout: kanji - kana - romaji (optional) - meaning - additional info
+    # csv layout: kanji - kana - romaji (optional) - meaning(s) - additional info
     def __init__(self, *args):
         self.fields = []
         for arg in args:
