@@ -22,3 +22,11 @@ def get_word_numbers_from_user_input():
 def to_int_list(space_separated_ints):
     result_list = [int(number) for number in space_separated_ints.split()]
     return result_list
+
+
+def print_connection_error_message():
+    print("Napotkano błąd połączenia.")
+
+
+def print_saving_message(word):
+    print("Zapisuję słowo: " + word + ".")

@@ -13,9 +13,6 @@ class MjpPageSoup:
             "table", {"id": "wordDictionaryFindWordResult"})
         return result_table
 
-    def prettify(self):
-        self.soup.prettify()
-
     def get_content(self):
         return self.soup
 

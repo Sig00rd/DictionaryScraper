@@ -1,5 +1,3 @@
-import requests
-
 import jmp_page
 import io_utils
 from cell_parser import MjpRowParser
@@ -9,26 +7,13 @@ from file_handler import FileHandler
 
 class Scraper:
     def __init__(self):
-        self.address = ""
         self.mjp_soup = jmp_page.MjpPageSoup()
         self.word_csvs = []
         self.file_handler = FileHandler()
         self.cell_parser = MjpRowParser()
 
-    def set_address(self, _address):
-        self.address = _address
-
-    def get_html_from_mjp(self):
-        result = requests.get(self.address)
-        return result.content
-
-    def build_soup_from_html(self):
-        html = self.get_html_from_mjp()
+    def build_soup_from_html(self, html):
         self.mjp_soup.build_from_html(html)
-
-    def print_pretty_page_content(self):
-        self.mjp_soup.prettify()
-        print(self.mjp_soup.soup)
 
     def clear_csvs(self):
         self.word_csvs = []
