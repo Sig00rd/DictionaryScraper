@@ -1,9 +1,8 @@
 class Word:
     # csv layout: kanji - kana - romaji (optional) - meaning(s) - additional info
-    def __init__(self, *args):
-        self.fields = []
-        for arg in args:
-            self.fields.append(arg)
+    def __init__(self):
+        self.fields = [] # strings
+        self.cells = [] # result table cells scrapped from mjp
 
     def append_field(self, content):
         self.fields.append(content.replace("\n", ""))
@@ -19,6 +18,12 @@ class Word:
             return True
         else:
             return False
+
+    def get_cells(self):
+        return self.cells
+
+    def set_cells(self, cells):
+        self.cells = cells
 
     def replace_kana_with_kanji(self):
             self.fields[0], self.fields[1] = self.fields[1], self.fields[0]

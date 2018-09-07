@@ -12,7 +12,9 @@ class MjpRowParser:
 
     def build_from_cell_list(self, cell_list):
         self.cells = cell_list
-        self.current_column = 0
+
+    def set_column(self, number):
+        self.current_column = number
 
     def increment(self):
         self.current_column += 1
@@ -34,6 +36,12 @@ class MjpRowParser:
             content = cell.find(text=True)
 
         return content
+
+    def parse_writing(self, writing_cell):
+        return writing_cell.find(text=True)
+
+    def parse_reading(self, reading_cell):
+        return reading_cell.find(text=True)
 
     def handle_meaning_column(self, cell):
         self.meanings = cell.find_all(text=True)

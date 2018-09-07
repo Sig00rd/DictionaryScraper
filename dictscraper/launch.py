@@ -27,11 +27,15 @@ for word in requested_words:
     address_elements = (address_constants.PRE_WORD, word, address_constants.POST_WORD)
     result_address = "".join(address_elements)
 
-    try:
-        result_html = get_html_from_mjp(result_address)
-        scraper.build_soup_from_html(result_html)
-        scraper.build_word_csvs_from_page()
-        scraper.save_user_selected_words()
-        scraper.clear_csvs()
-    except requests.ConnectionError:
-        handle_connection_error(word, not_found_file)
+    # try:
+    result_html = get_html_from_mjp(result_address)
+    scraper.build_soup_from_html(result_html)
+    scraper.build_word_cells_from_soup()
+    scraper.build_words_start_from_page()
+    scraper.build_word_csvs_from_page()
+    # scraper.build_words_rest_from_page()
+    # scraper.save_user_selected_words()
+    scraper.get_user_to_choose_words()
+    scraper.clear_csvs()
+    # except requests.ConnectionError:
+    #     handle_connection_error(word, not_found_file)

@@ -8,6 +8,7 @@ from file_handler import FileHandler
 class Scraper:
     def __init__(self):
         self.mjp_soup = jmp_page.MjpPageSoup()
+        self.words = []
         self.word_csvs = []
         self.file_handler = FileHandler()
         self.cell_parser = MjpRowParser()
@@ -18,11 +19,32 @@ class Scraper:
     def clear_csvs(self):
         self.word_csvs = []
 
+    def build_word_cells_from_soup(self):
+        result_table_rows = self.mjp_soup.get_result_table_rows()
+        for row in result_table_rows:
+            cells = row.find_all("td")
+            word = Word()
+            word.set_cells(cells)
+            self.words.append(word)
+
+    def build_words_start_from_page(self):
+        for word in self.words:
+            cells = word.get_cells()
+            writing_cell = cells[0]
+            reading_cell = cells[1]
+            word.append_field(self.cell_parser.parse_writing(writing_cell))
+            word.append_field(self.cell_parser.parse_reading(reading_cell))
+
+    def build_words_rest_from_page(self):
+        pass
+
     def build_word_csvs_from_page(self):
-        rows = self.mjp_soup.get_result_table_rows()
-        for row in rows:
-            word = self.parse_row_to_word(row)
-            self.word_csvs.append(word.csv())
+        # rows = self.mjp_soup.get_result_table_rows()
+        # for row in rows:
+        #     word = self.parse_row_to_word(row)
+        #     self.word_csvs.append(word.csv())
+        for word in self.words:
+            self.word_csvs.append(word.csv)
 
     def parse_row_to_word(self, row):
         cells = row.find_all("td")
@@ -40,6 +62,10 @@ class Scraper:
         valid_numbers = self.cut_numbers_bigger_than_words_list_size(word_numbers)
         for number in valid_numbers:
             self.append_word_to_file(number)
+
+    def get_user_to_choose_words(self):
+        io_utils.print_words_or_meanings(self.word_csvs)
+        self.get_desired_words_numbers_from_user()
 
     def present_words_to_user(self):
         io_utils.print_words_or_meanings(self.word_csvs)
