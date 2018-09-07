@@ -34,4 +34,4 @@ for word in requested_words:
         scraper.save_user_selected_words()
         scraper.clear_csvs()
     except requests.ConnectionError:
-        handle_connection_error(word)
+        handle_connection_error(word, not_found_file)

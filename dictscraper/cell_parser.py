@@ -12,6 +12,7 @@ class MjpRowParser:
 
     def build_from_cell_list(self, cell_list):
         self.cells = cell_list
+        self.current_column = 0
 
     def increment(self):
         self.current_column += 1
