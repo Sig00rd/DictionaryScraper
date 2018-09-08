@@ -1,5 +1,6 @@
 import jmp_page
 import io_utils
+import config
 from cell_parser import MjpRowParser
 from word import Word
 from file_handler import FileHandler
@@ -10,6 +11,7 @@ class Scraper:
         self.mjp_soup = jmp_page.MjpPageSoup()
         self.words = []
         self.word_csvs = []
+        self.to_save_numbers = []
         self.file_handler = FileHandler()
         self.cell_parser = MjpRowParser()
 
@@ -29,43 +31,59 @@ class Scraper:
 
     def build_words_start_from_page(self):
         for word in self.words:
-            cells = word.get_cells()
-            writing_cell = cells[0]
-            reading_cell = cells[1]
-            word.append_field(self.cell_parser.parse_writing(writing_cell))
-            word.append_field(self.cell_parser.parse_reading(reading_cell))
+            writing_cell, reading_cell = word.get_writing_and_reading_cells()
+            word.append_field(self.cell_parser.parse_writing_reading_or_info(writing_cell))
+            word.append_field(self.cell_parser.parse_writing_reading_or_info(reading_cell))
 
     def build_words_rest_from_page(self):
-        pass
+        chosen_words = [self.words[number] for number in self.to_save_numbers]
+        for word in chosen_words:
+            meanings, additional_info = word.get_meanings_and_additional_info_cells()
+            word.set_meanings(self.cell_parser.parse_meanings(meanings))
+            word.set_additional_info(self.cell_parser.parse_writing_reading_or_info(additional_info))
+            print(self.cell_parser.parse_meanings(meanings))
 
-    def build_word_csvs_from_page(self):
+
+
+
+    def build_words_start_csvs_from_page(self):
         # rows = self.mjp_soup.get_result_table_rows()
         # for row in rows:
         #     word = self.parse_row_to_word(row)
         #     self.word_csvs.append(word.csv())
         for word in self.words:
-            self.word_csvs.append(word.csv)
+            self.word_csvs.append(word.csv())
 
-    def parse_row_to_word(self, row):
-        cells = row.find_all("td")
-        self.cell_parser.build_from_cell_list(cells)
-        word = Word()
-        for i in range(5):
-            content = self.cell_parser.parse_cell_to_string()
-            word.append_field(content)
-            self.cell_parser.increment()
-        return word
+    def build_chosen_word_cvs(self):
+        for number in self.to_save_numbers:
+            csv_to_append = self.words[number].csv()
+            self.word_csvs.append(csv_to_append)
+
+    # def parse_row_to_word(self, row):
+    #     cells = row.find_all("td")
+    #     self.cell_parser.build_from_cell_list(cells)
+    #     word = Word()
+    #     for i in range(5):
+    #         content = self.cell_parser.parse_cell_to_string()
+    #         word.append_field(content)
+    #         self.cell_parser.increment()
+    #     return word
+
+    # def save_user_selected_words(self):
+    #     self.present_words_to_user()
+    #     word_numbers = self.get_desired_words_numbers_from_user()
+    #     valid_numbers = self.cut_numbers_bigger_than_words_list_size(word_numbers)
+    #     for number in valid_numbers:
+    #         self.append_word_to_file(number)
 
     def save_user_selected_words(self):
-        self.present_words_to_user()
-        word_numbers = self.get_desired_words_numbers_from_user()
-        valid_numbers = self.cut_numbers_bigger_than_words_list_size(word_numbers)
-        for number in valid_numbers:
+        for number in self.to_save_numbers:
             self.append_word_to_file(number)
 
     def get_user_to_choose_words(self):
         io_utils.print_words_or_meanings(self.word_csvs)
-        self.get_desired_words_numbers_from_user()
+        to_save_numbers = self.get_desired_words_numbers_from_user()
+        self.to_save_numbers = to_save_numbers
 
     def present_words_to_user(self):
         io_utils.print_words_or_meanings(self.word_csvs)

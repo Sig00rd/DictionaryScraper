@@ -3,6 +3,8 @@ class Word:
     def __init__(self):
         self.fields = [] # strings
         self.cells = [] # result table cells scrapped from mjp
+        self.additional_info = ""
+        self.meanings = []
 
     def append_field(self, content):
         self.fields.append(content.replace("\n", ""))
@@ -22,8 +24,23 @@ class Word:
     def get_cells(self):
         return self.cells
 
+    def get_writing_and_reading_cells(self):
+        return self.cells[0], self.cells[1]
+
+    def get_meanings_and_additional_info_cells(self):
+        return self.cells[3], self.cells[4]
+
     def set_cells(self, cells):
         self.cells = cells
+
+    def set_meanings(self, meanings):
+        self.meanings = meanings
+
+    def set_additional_info(self, additional_info):
+        self.additional_info = additional_info
+
+    def get_meanings(self):
+        return self.meanings
 
     def replace_kana_with_kanji(self):
             self.fields[0], self.fields[1] = self.fields[1], self.fields[0]
