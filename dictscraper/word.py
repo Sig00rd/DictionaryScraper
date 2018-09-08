@@ -15,6 +15,13 @@ class Word:
         output = str.join(";", self.fields)
         return output
 
+    def append_meanings_field(self, number_list):
+        chosen_meanings = []
+        for number in number_list:
+            chosen_meanings.append(self.meanings[number])
+        self.append_field(",".join(chosen_meanings))
+
+
     def is_kanji_field_empty(self):
         if not self.fields[0]:
             return True

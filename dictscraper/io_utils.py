@@ -8,15 +8,30 @@ def to_words_list(comma_separated_words):
     return result_list
 
 
-def print_words_or_meanings(words):
+def print_words_or_meanings(message, words):
+    print(message)
     for i in range(len(words)):
         print("{:2}: {}".format(i, words[i]))
 
 
 def get_word_numbers_from_user_input():
-    print("Podaj numery słów do zapisu oddzielając je spacjami:")
+    input_list = get_numbers_from_user_input(
+        "Podaj numery słów do zapisu oddzielając je spacjami:"
+    )
+    return input_list
+
+
+def get_numbers_from_user_input(message):
+    print(message)
     user_input = input()
     return to_int_list(user_input)
+
+
+def get_meaning_numbers_from_user_input():
+    input_list = get_numbers_from_user_input(
+        "Podaj numery znaczeń do zapisu oddzielając je spacjami:"
+    )
+    return input_list
 
 
 def to_int_list(space_separated_ints):
