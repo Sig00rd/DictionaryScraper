@@ -3,7 +3,6 @@ import config
 
 class MjpRowParser:
     def __init__(self):
-        self.meanings = []
         self.INCLUDE_ROMAJI = config.INCLUDE_ROMAJI
         self.MEANING_LIMIT = config.MEANING_LIMIT
         self.LAZY_MEANINGS = config.LAZY_MEANINGS
@@ -35,27 +34,17 @@ class MjpRowParser:
 
     def parse_meanings(self, meanings_cell):
         meanings = meanings_cell.find_all(text=True)
-        self.meanings = [meaning.replace("\n", "") for meaning in meanings]
+        meanings = [meaning.replace("\n", "") for meaning in meanings]
 
         if self.is_meaning_limit_set():
-            self.cut_meanings_above_limit()
-        return self.meanings
-
-    # def handle_meaning_column(self, cell):
-    #     self.meanings = cell.find_all(text=True)
-    #     if self.is_meaning_limit_set():
-    #         self.cut_meanings_above_limit()
-    #     else:
-    #         self.let_user_choose_meanings()
-    #
-    #     content = ", ".join(self.meanings)
-    #     return content
+            meanings = self.cut_meanings_above_limit(meanings)
+        return meanings
 
     def let_user_choose_meanings(self):
         pass
 
-    def cut_meanings_above_limit(self):
-        self.meanings = self.meanings[:self.MEANING_LIMIT]
+    def cut_meanings_above_limit(self, array):
+        return array[:self.MEANING_LIMIT]
 
     def is_romaji_enabled(self):
         if self.INCLUDE_ROMAJI:
