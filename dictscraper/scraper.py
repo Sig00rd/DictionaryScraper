@@ -1,6 +1,5 @@
 import jmp_page
 import io_utils
-import config
 from cell_parser import MjpRowParser
 from word import Word
 from file_handler import FileHandler
@@ -18,6 +17,17 @@ class Scraper:
 
     def build_soup_from_html(self, html):
         self.mjp_soup.build_from_html(html)
+
+    def build_word_list(self):
+        self.build_word_cells_from_soup()
+        self.build_words_start_from_page()
+        self.build_words_start_csvs_from_page()
+
+    def expand_chosen_words(self):
+        self.cut_numbers_bigger_than_words_list_size()
+        self.build_words_meanings_and_info_from_page()
+        self.build_chosen_words_array()
+        self.build_chosen_words_last_fields()
 
     def reset(self):
         self.word_csvs = []
@@ -72,49 +82,19 @@ class Scraper:
             csv_to_append = self.words[number].csv()
             self.word_csvs.append(csv_to_append)
 
-    # def parse_row_to_word(self, row):
-    #     cells = row.find_all("td")
-    #     self.cell_parser.build_from_cell_list(cells)
-    #     word = Word()
-    #     for i in range(5):
-    #         content = self.cell_parser.parse_cell_to_string()
-    #         word.append_field(content)
-    #         self.cell_parser.increment()
-    #     return word
-
-    # def save_user_selected_words(self):
-    #     self.present_words_to_user()
-    #     word_numbers = self.get_desired_words_numbers_from_user()
-    #     valid_numbers = self.cut_numbers_bigger_than_words_list_size(word_numbers)
-    #     for number in valid_numbers:
-    #         self.append_word_to_file(number)
-
     def save_user_selected_words(self):
         for word in self.chosen_words:
             self.append_word_to_file(word)
-        # for number in self.to_save_numbers:
-        #     self.append_word_to_file(number)
 
     def get_user_to_choose_words(self):
         io_utils.print_words_or_meanings("Znalezione słowa: ", self.word_csvs)
-        to_save_numbers = self.get_desired_words_numbers_from_user()
+        to_save_numbers = io_utils.get_word_numbers_from_user_input()
         self.to_save_numbers = to_save_numbers
 
-    # def present_words_to_user(self):
-    #     io_utils.print_words_or_meanings("", self.word_csvs)
-
-    def get_desired_words_numbers_from_user(self):
-        return io_utils.get_word_numbers_from_user_input()
-
-    def cut_numbers_bigger_than_words_list_size(self, numbers):
-        for number in numbers:
+    def cut_numbers_bigger_than_words_list_size(self):
+        for number in self.to_save_numbers:
             if number >= len(self.word_csvs):
-                numbers.remove(number)
-        return numbers
-
-    # def append_word_to_file(self, word_number):
-    #     word_to_append = self.word_csvs[word_number]
-    #     self.file_handler.append_to_file(word_to_append)
+                self.to_save_numbers.remove(number)
 
     def append_word_to_file(self, word):
         csv = word.csv()
