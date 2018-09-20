@@ -1,5 +1,5 @@
 import os.path
-import config
+from resources import config
 
 
 class FileHandler:

@@ -1,4 +1,4 @@
-import config
+from resources import config
 
 
 class MjpRowParser:

@@ -11,7 +11,7 @@ MEANING_LIMIT = 2
 
 # path to the file storing scrapped words, relative to your user (~) directory
 # you'll be using that file with anki
-CSV_FILE_PATH = "Uczelnia/Projekty/DictionaryScraper/CSV/csv_file.txt"
+CSV_FILE_PATH = "Uczelnia/Projekty/DictionaryScraper/resources/csv_file.txt"
 
 # if set to true, when a connection error occurs, requested words will be stored in a separate file
 QUEUE_IF_CONNECTION_ERROR = True

@@ -1,7 +1,7 @@
 import requests
 
 import scraper
-import config
+from resources import config
 from not_found_file import NotFoundFile
 import io_utils
 import address_constants
