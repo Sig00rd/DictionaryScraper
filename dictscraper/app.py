@@ -18,6 +18,7 @@ class App:
 
     def run(self):
         self.build_requested_expressions()
+
         for expression in self.requested_expressions:
             self.handle_expression(expression)
 

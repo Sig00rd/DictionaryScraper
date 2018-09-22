@@ -1,6 +1,5 @@
 from resources import config
 
-
 class MjpRowParser:
     def __init__(self):
         self.INCLUDE_ROMAJI = config.INCLUDE_ROMAJI

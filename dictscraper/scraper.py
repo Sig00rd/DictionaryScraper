@@ -17,9 +17,9 @@ class Scraper:
     def scrap_to_csv(self, html):
         self.build_soup_from_html(html)
         self.build_word_list()
-        self.get_user_to_choose_words()
+        self.get_user_to_choose_words() # push csv list up, get numbers and set them
         self.expand_chosen_words()
-        self.save_user_selected_words()
+        self.save_user_selected_words() #
         self.reset()
 
     def build_word_list(self):
@@ -91,20 +91,24 @@ class Scraper:
         numbers_of_meanings_to_save = io_utils.get_meaning_numbers_from_user_input()
         return numbers_of_meanings_to_save
 
+    def set_to_save_numbers(self, numbers):
+        self.to_save_numbers = numbers
+
     def build_chosen_words_csvs(self):
         for number in self.to_save_numbers:
             csv_to_append = self.words[number].csv()
             self.word_csvs.append(csv_to_append)
-
-    def save_user_selected_words(self):
-        for word in self.words:
-            self.append_word_to_file(word)
 
     def cut_numbers_bigger_than_words_list_size(self):
         for number in self.to_save_numbers:
             if number >= len(self.word_csvs):
                 self.to_save_numbers.remove(number)
 
+    def save_user_selected_words(self):
+        for word in self.words:
+            self.append_word_to_file(word)
+
     def append_word_to_file(self, word):
         csv = word.csv()
         self.file_handler.append_to_file(csv)
+
