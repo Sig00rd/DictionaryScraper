@@ -7,24 +7,6 @@ class MjpRowParser:
         self.MEANING_LIMIT = config.MEANING_LIMIT
         self.LAZY_MEANINGS = config.LAZY_MEANINGS
 
-    # def parse_cell_to_string(self):
-    #     cell = self.cells[self.current_column]
-    #
-    #     if self.at_romaji_column():
-    #         if self.is_romaji_enabled():
-    #             romaji = cell.find_all(text=True)
-    #             content = "".join(romaji)
-    #         else:
-    #             content = ""
-    #
-    #     elif self.at_meaning_column():
-    #         content = self.handle_meaning_column(cell)
-    #
-    #     else:
-    #         content = cell.find(text=True)
-    #
-    #     return content
-
     def parse_writing_reading_or_info(self, cell):
         return cell.find(text=True)
 

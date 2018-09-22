@@ -14,6 +14,14 @@ class Scraper:
         self.file_handler = FileHandler()
         self.cell_parser = MjpRowParser()
 
+    def scrap_to_csv(self, html):
+        self.build_soup_from_html(html)
+        self.build_word_list()
+        self.get_user_to_choose_words()
+        self.expand_chosen_words()
+        self.save_user_selected_words()
+        self.reset()
+
     def build_word_list(self):
         self.build_word_cells_from_soup()
         self.build_words_start_from_page()
