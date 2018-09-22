@@ -1,5 +1,5 @@
 # romaji switch
-# set to True if you want romaji in your , False otherwise
+# set to True if you want romaji in your cards, False otherwise
 INCLUDE_ROMAJI = True
 
 # if set to true, user won't be prompted for meanings choices with each and every words

@@ -40,9 +40,6 @@ class MjpRowParser:
             meanings = self.cut_meanings_above_limit(meanings)
         return meanings
 
-    def let_user_choose_meanings(self):
-        pass
-
     def cut_meanings_above_limit(self, array):
         return array[:self.MEANING_LIMIT]
 

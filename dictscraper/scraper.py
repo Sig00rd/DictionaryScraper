@@ -73,15 +73,15 @@ class Scraper:
 
     def build_chosen_words_last_fields(self):
         for word in self.words:
-            meanings_to_save_numbers = self.let_user_choose_words_meanings(word)
+            meanings_to_save_numbers = self.get_user_to_choose_word_meanings(word)
             word.append_meanings_field(meanings_to_save_numbers)
             word.append_field(word.additional_info)
 
-    def let_user_choose_words_meanings(self, word):
+    def get_user_to_choose_word_meanings(self, word):
         writing_and_meaning = word.csv()
         io_utils.print_words_or_meanings(writing_and_meaning, word.meanings)
-        meanings_to_save_numbers = io_utils.get_meaning_numbers_from_user_input()
-        return meanings_to_save_numbers
+        numbers_of_meanings_to_save = io_utils.get_meaning_numbers_from_user_input()
+        return numbers_of_meanings_to_save
 
     def build_chosen_words_csvs(self):
         for number in self.to_save_numbers:

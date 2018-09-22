@@ -1,4 +1,4 @@
-def get_requested_words_from_user_input():
+def get_requested_expressions_from_user_input():
     input_word = input("Wpisz szukane wyrażenia oddzielając je przecinkami: ")
     return to_words_list(input_word)
 
