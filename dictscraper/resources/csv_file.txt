@@ -1,2 +1,8 @@
-盗む;ぬすむ;kraść,rabować;
-気軽;きがる;czuć się lekko;
+深い;ふかい;głęboki (miejsce),rozległy (miejsce),głęboka (wiedza),rozległa (wiedza);
+浅い;あさい;płytki;
+冷える;ひえる;ochładzać się (np. w pokoju od klimatyzatora),oziębiać się,stygnąć;
+冷やす;ひやす;oziębiać,ochładzać,chłodzić;
+拾う;ひろう;podnieść (coś),zbierać,znaleźć;np. grzyby
+嘗て;かつて;raz,przed,dawniej;
+冷める;さめる;stać się zimnym,ostygnąć,ochłodzić;
+ぐっすり;;odgłos spania;
