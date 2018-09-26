@@ -14,21 +14,15 @@ class Scraper:
         self.file_handler = FileHandler()
         self.cell_parser = MjpRowParser()
 
-    def scrap_to_csv(self, html):
+    # initial word list has word objects for all words that the dictionary returns,
+    # but as its initial, those word objects only have writing and reading fields
+    def build_initial_word_list(self, html):
         self.build_soup_from_html(html)
-        self.build_word_list()
-        self.get_user_to_choose_words() # push csv list up, get numbers and set them
-        self.expand_chosen_words()
-        self.save_user_selected_words() #
-        self.reset()
-
-    def build_word_list(self):
         self.build_word_cells_from_soup()
         self.build_words_start_from_page()
         self.build_words_start_csvs_from_page()
 
     def expand_chosen_words(self):
-        self.cut_numbers_bigger_than_words_list_size()
         self.build_words_meanings_and_info_from_page()
         self.build_chosen_words_array()
         self.build_chosen_words_last_fields()
@@ -112,3 +106,5 @@ class Scraper:
         csv = word.csv()
         self.file_handler.append_to_file(csv)
 
+    def get_word_csvs(self):
+        return self.word_csvs

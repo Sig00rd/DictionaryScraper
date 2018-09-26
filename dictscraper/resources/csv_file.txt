@@ -6,3 +6,4 @@
 嘗て;かつて;raz,przed,dawniej;
 冷める;さめる;stać się zimnym,ostygnąć,ochłodzić;
 ぐっすり;;odgłos spania;
+走る;はしる;biegać (o ludziach i zwierzętach),biec (o ludziach i zwierzętach);

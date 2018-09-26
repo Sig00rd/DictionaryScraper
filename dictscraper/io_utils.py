@@ -45,3 +45,19 @@ def print_connection_error_message():
 
 def print_saving_message(word):
     print("Zapisuję słowo: " + word + ".")
+
+
+def get_numbers_of_words_to_save_from_user(writing_meaning_list):
+    print_words_or_meanings(
+        "Podaj numery słów do zapisu oddzielając je spacjami:",
+        writing_meaning_list
+    )
+    number_list = to_int_list(input())
+    return cut_numbers_above_list_size(number_list, writing_meaning_list)
+
+
+def cut_numbers_above_list_size(number_list, data_list):
+    for number in number_list:
+        if number >= len(data_list):
+            number_list.remove(number)
+    return number_list

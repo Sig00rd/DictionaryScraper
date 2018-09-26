@@ -28,7 +28,13 @@ class App:
 
         try:
             result_html = self.get_html_from_mjp(result_address)
-            self.scraper.scrap_to_csv(result_html)
+            self.scraper.build_initial_word_list(result_html)
+            writings_and_meanings = self.scraper.get_word_csvs()
+            words_to_save_numbers = io_utils.get_numbers_of_words_to_save_from_user(writings_and_meanings)
+            self.scraper.set_to_save_numbers(words_to_save_numbers)
+            self.scraper.expand_chosen_words()
+            self.scraper.save_user_selected_words()
+            self.scraper.reset()
 
         except requests.ConnectionError:
             self.handle_connection_error(expression)
