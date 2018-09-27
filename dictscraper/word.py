@@ -21,6 +21,9 @@ class Word:
             chosen_meanings.append(self.meanings[number])
         self.append_field(",".join(chosen_meanings))
 
+    def append_additional_info(self):
+        self.append_field(self.additional_info)
+
     def is_expression_field_empty(self):
         if not self.fields[0]:
             return True

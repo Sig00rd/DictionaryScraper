@@ -15,7 +15,7 @@ class Scraper:
         self.cell_parser = MjpRowParser()
 
     # initial word list has word objects for all words that the dictionary returns,
-    # but as its initial, those word objects only have writing and reading fields
+    # but as it's initial, those word objects only have writing and reading fields
     def build_initial_word_list(self, html):
         self.build_soup_from_html(html)
         self.build_word_cells_from_soup()
@@ -23,8 +23,8 @@ class Scraper:
         self.build_words_start_csvs_from_page()
 
     def expand_chosen_words(self):
-        self.build_words_meanings_and_info_from_page()
         self.build_chosen_words_array()
+        self.build_words_meanings_and_info_from_page()
         self.build_chosen_words_last_fields()
 
     def reset(self):
@@ -66,24 +66,10 @@ class Scraper:
         self.words = [self.words[number] for number in self.to_save_numbers]
 
     def build_words_meanings_and_info_from_page(self):
-        chosen_words = [self.words[number] for number in self.to_save_numbers]
-
-        for word in chosen_words:
+        for word in self.words:
             meanings, additional_info = word.get_meanings_and_additional_info_cells()
             word.set_meanings(self.cell_parser.parse_meanings(meanings))
             word.set_additional_info(self.cell_parser.parse_writing_reading_or_info(additional_info))
-
-    def build_chosen_words_last_fields(self):
-        for word in self.words:
-            meanings_to_save_numbers = self.get_user_to_choose_word_meanings(word)
-            word.append_meanings_field(meanings_to_save_numbers)
-            word.append_field(word.additional_info)
-
-    def get_user_to_choose_word_meanings(self, word):
-        writing_and_meaning = word.csv()
-        io_utils.print_words_or_meanings(writing_and_meaning, word.meanings)
-        numbers_of_meanings_to_save = io_utils.get_meaning_numbers_from_user_input()
-        return numbers_of_meanings_to_save
 
     def set_to_save_numbers(self, numbers):
         self.to_save_numbers = numbers
@@ -108,3 +94,12 @@ class Scraper:
 
     def get_word_csvs(self):
         return self.word_csvs
+
+    def meanings_writings_indexes(self):
+        for index, word in enumerate(self.words):
+            yield word.get_meanings(), word.csv(), index
+
+    def build_word_last_fields(self, word_index, meanings_to_save_numbers):
+        word = self.words[word_index]
+        word.append_meanings_field(meanings_to_save_numbers)
+        word.append_additional_info()
