@@ -13,11 +13,15 @@ class App:
         self.not_found_file = NotFoundFile()
         self.requested_expressions = []
 
+    def set_arguments(self, arguments):
+        self.requested_expressions = arguments
+
     def build_requested_expressions(self):
         self.requested_expressions = io_utils.get_requested_expressions_from_user_input()
 
     def run(self):
-        self.build_requested_expressions()
+        if self.is_requested_expressions_list_empty():
+            self.build_requested_expressions()
 
         for expression in self.requested_expressions:
             self.handle_expression(expression)
@@ -42,6 +46,11 @@ class App:
 
         except requests.ConnectionError:
             self.handle_connection_error(expression)
+
+    def is_requested_expressions_list_empty(self):
+        if len(self.requested_expressions):
+            return False
+        return True
 
     def get_html_from_mjp(self, address):
         result = requests.get(address)
