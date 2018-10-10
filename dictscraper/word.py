@@ -19,7 +19,7 @@ class Word:
         chosen_meanings = []
         for number in number_list:
             chosen_meanings.append(self.meanings[number])
-        self.append_field(",".join(chosen_meanings))
+        self.append_field(", ".join(chosen_meanings))
 
     def append_additional_info(self):
         self.append_field(self.additional_info)
